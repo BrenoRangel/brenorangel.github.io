@@ -75029,7 +75029,7 @@ h=[400*d/(d+27.13),400*c/(c+27.13),400*i/(i+27.13)]
 return new A.a8L(l,(40*h[0]+20*h[1]+h[2])/20*k,k,k,a1,1,q,m,A.BJ(m,0.25),1.48+e)})
 s($,"aFx","ahq",()=>A.amw(t.K))
 r($,"aIr","ahC",()=>{var q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1=null,a2=t.s,a3=A.a(["Tablet","Flutter","Dart","Firebase"],a2)
-a3=A.dH(a1,a1,A.a(["assets/images/1.png","assets/images/2.png","assets/images/3.png","assets/images/4.png","assets/images/5.png","assets/images/6.png"],a2),"Distribu\xeddo apenas durante o evento",!1,a3,"Ibmec/RioOpen Quiz 2023")
+a3=A.dH(a1,a1,A.a(["assets/assets/images/1.png","assets/assets/images/2.png","assets/assets/images/3.png","assets/assets/images/4.png","assets/assets/images/5.png","assets/assets/images/6.png"],a2),"Distribu\xeddo apenas durante o evento",!1,a3,"Ibmec/RioOpen Quiz 2023")
 q=A.a(["Celular","Flutter","Dart"],a2)
 q=A.dH(a1,a1,A.a([],a2),"Em desenvolvimento",!1,q,"CCAA Espa\xe7o Aluno")
 p=A.a(["Celular","Flutter","Dart","Firebase","HTML","CSS"],a2)

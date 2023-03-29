@@ -29,3 +29,6 @@ flutter:
     - family: Azonix
       fonts:
         - asset: assets/fonts/Azonix.otf
+  assets:
+    - assets/icons/
+    - assets/images/

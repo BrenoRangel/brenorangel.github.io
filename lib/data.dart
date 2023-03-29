@@ -12,12 +12,12 @@ var apps = [
       'Firebase'
     ],
     imagesUrls: [
-      'assets/images/1.png',
-      'assets/images/2.png',
-      'assets/images/3.png',
-      'assets/images/4.png',
-      'assets/images/5.png',
-      'assets/images/6.png',
+      'assets/assets/images/1.png',
+      'assets/assets/images/2.png',
+      'assets/assets/images/3.png',
+      'assets/assets/images/4.png',
+      'assets/assets/images/5.png',
+      'assets/assets/images/6.png',
     ],
   ),
   Item(
