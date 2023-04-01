@@ -5,7 +5,7 @@ var apps = [
     title: 'Ibmec/RioOpen Quiz 2023',
     published: false,
     obs: "Distribuído apenas durante os dias do evento",
-    deviceFrameIdentifier: 'ios_tablet_ipad',
+    deviceFrameIdentifier: 'iPad',
     deviceFrameOrientation: 'portrait',
     tags: [
       'Tablet',
@@ -31,7 +31,7 @@ var apps = [
       'Flutter',
       'Dart',
     ],
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     imagesUrls: [
       'assets/assets/images/espaco/1.jpg',
       'assets/assets/images/espaco/2.jpg',
@@ -71,7 +71,7 @@ var apps = [
     title: "CCAA Baby Class 1",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pkum',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-1/id1502295293',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -91,7 +91,7 @@ var apps = [
     title: "CCAA Baby Class 2",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pkdois',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-2/id1567437381',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -110,7 +110,7 @@ var apps = [
     title: "CCAA Baby Class 3",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pktres',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-3/id1538299542',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -129,7 +129,7 @@ var apps = [
     title: "CCAA Baby Class 4",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pkquatro',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-4/id1601871374',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -149,7 +149,7 @@ var apps = [
     title: "CCAA Baby Class 5",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pkcinco',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-5/id1607390377',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -168,7 +168,7 @@ var apps = [
     title: "CCAA Baby Class 6",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.pkseis',
     iOS: 'https://apps.apple.com/br/app/ccaa-baby-class-6/id1622237605',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -187,7 +187,7 @@ var apps = [
     title: "CCAA Kids 1",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.kae1',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-1/id1254206862',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -204,7 +204,7 @@ var apps = [
     title: "CCAA Kids 2",
     android: 'https://play.google.com/store/apps/details?id=br.com.ccaa.kaedois',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-2/id1239944595',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -224,7 +224,7 @@ var apps = [
     title: "CCAA Kids 3",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.kaetres',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-3/id1287519616',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -243,7 +243,7 @@ var apps = [
     title: "CCAA Kids 4",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.kaequatro',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-4/id1242038251',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -260,7 +260,7 @@ var apps = [
     title: "CCAA Kids 5",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pckum',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-5/id1317074055',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -279,7 +279,7 @@ var apps = [
     title: "CCAA Kids 6",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pckdois',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-6/id1357328769',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -300,7 +300,7 @@ var apps = [
     title: "CCAA Kids 7",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pcbkum',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-7/id1407850969',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -319,7 +319,7 @@ var apps = [
     title: "CCAA Kids 8",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pcbkdois',
     iOS: 'https://apps.apple.com/br/app/ccaa-kids-8/id1390582125',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -340,7 +340,7 @@ var apps = [
     title: "CCAA Preteen 1",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pcptum',
     iOS: 'https://apps.apple.com/br/app/ccaa-preteen-1/id1437531458',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',
@@ -361,7 +361,7 @@ var apps = [
     title: "CCAA Preteen 2",
     android: 'https://play.google.com/store/apps/details?id=air.br.com.ccaa.pcptdois',
     iOS: 'https://apps.apple.com/br/app/ccaa-preteen-2/id1397414545',
-    deviceFrameIdentifier: 'android_phone_medium',
+    deviceFrameIdentifier: 'Medium',
     deviceFrameOrientation: 'landscape',
     tags: [
       'Celular',

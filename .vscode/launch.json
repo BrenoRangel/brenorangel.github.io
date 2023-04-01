@@ -9,10 +9,7 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--web-renderer",
-                "html"
-                //"-d",
-                //"web-server"
+                "-v"
             ]
         },
         {
@@ -21,10 +18,7 @@
             "type": "dart",
             "flutterMode": "profile",
             "args": [
-                "--web-renderer",
-                "html",
-                "-d",
-                "web-server"
+                "-v"
             ]
         },
         {
@@ -33,10 +27,7 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--web-renderer",
-                "html",
-                "-d",
-                "web-server"
+                //"-v"
             ]
         }
     ]

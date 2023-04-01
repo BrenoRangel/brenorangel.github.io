@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:device_frame/device_frame.dart';
@@ -15,14 +14,14 @@ class ItemView extends StatelessWidget {
 
   ItemView({super.key, required this.item});
 
-  final controller = ScrollController();
-  final hasScrollbar = false.obs;
-  final page = 0.obs;
+  final ScrollController controller = ScrollController();
+  final RxBool hasScrollbar = false.obs;
+  final RxInt page = 0.obs;
 
   @override
   Widget build(BuildContext context) {
     var constraints = BoxConstraints(
-      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) / 3,
+      maxHeight: MediaQuery.of(context).size.height / 2,
       maxWidth: MediaQuery.of(context).size.width - 16,
     );
     return Card(
@@ -71,18 +70,10 @@ class ItemView extends StatelessWidget {
                     children: List.generate(
                       item.imagesUrls.length,
                       (index) {
-                        Widget child = Image.network(
+                        Widget image = Image.network(
                           item.imagesUrls[index],
                           fit: BoxFit.fill,
                         );
-                        if (item.deviceFrameIdentifier != null) {
-                          child = DeviceFrame(
-                            orientation: Orientation.values.byName(item.deviceFrameOrientation),
-                            isFrameVisible: item.deviceFrameIdentifier != null,
-                            device: Devices.all.firstWhere((e) => e.identifier.toString() == item.deviceFrameIdentifier),
-                            screen: child,
-                          );
-                        }
                         return Padding(
                           padding: EdgeInsets.only(
                             top: 8,
@@ -125,7 +116,7 @@ class ItemView extends StatelessWidget {
                                                           child = DeviceFrame(
                                                             orientation: Orientation.values.byName(item.deviceFrameOrientation),
                                                             isFrameVisible: item.deviceFrameIdentifier != null,
-                                                            device: Devices.all.firstWhere((e) => e.identifier.toString() == item.deviceFrameIdentifier),
+                                                            device: Devices.all.firstWhere((e) => e.name == item.deviceFrameIdentifier),
                                                             screen: child,
                                                           );
                                                         }
@@ -179,7 +170,14 @@ class ItemView extends StatelessWidget {
                             },
                             child: ConstrainedBox(
                               constraints: constraints,
-                              child: child,
+                              child: item.deviceFrameIdentifier != null
+                                  ? DeviceFrame(
+                                      orientation: Orientation.values.byName(item.deviceFrameOrientation),
+                                      isFrameVisible: item.deviceFrameIdentifier != null,
+                                      device: Devices.all.firstWhere((e) => e.name == item.deviceFrameIdentifier),
+                                      screen: image,
+                                    )
+                                  : image,
                             ),
                           ),
                         );
