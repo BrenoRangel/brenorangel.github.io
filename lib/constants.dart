@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const tagIcons = {
   'Unity': 'https://answers.unity.com/storage/temp/109082-unity.png',
   'C#': 'https://cdn.jsdelivr.net/npm/@programming-languages-logos/csharp@0.0.0/csharp_256x256.png',
@@ -10,3 +12,5 @@ const tagIcons = {
   'Celular': 'https://cdn-icons-png.flaticon.com/512/15/15874.png',
   'Tablet': 'https://cdn-icons-png.flaticon.com/512/0/319.png',
 };
+
+const borderRadius = BorderRadius.all(Radius.circular(8));

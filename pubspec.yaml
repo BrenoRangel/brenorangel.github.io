@@ -16,6 +16,8 @@ dependencies:
   flutter_markdown: ^0.6.14
   cupertino_icons: ^1.0.2
   flutter_scroll_shadow: ^1.1.0
+  device_frame: ^1.1.0
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

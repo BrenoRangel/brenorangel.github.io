@@ -1,26 +1,33 @@
+import 'dart:math';
 import 'dart:ui';
 
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as md;
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'constants.dart';
 import 'item.dart';
-import 'theming.dart';
 
 class ItemView extends StatelessWidget {
   final Item item;
-  const ItemView({super.key, required this.item});
+
+  ItemView({super.key, required this.item});
+
+  final controller = ScrollController();
+  final hasScrollbar = false.obs;
+  final page = 0.obs;
 
   @override
   Widget build(BuildContext context) {
     var constraints = BoxConstraints(
-      maxHeight: MediaQuery.of(context).size.height / 2,
+      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) / 3,
       maxWidth: MediaQuery.of(context).size.width - 16,
     );
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: borderRadius,
         side: BorderSide(
           color: Theme.of(context).disabledColor,
         ),
@@ -47,54 +54,138 @@ class ItemView extends StatelessWidget {
               ),
             ),
             Scrollbar(
-              thumbVisibility: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  runAlignment: WrapAlignment.start,
-                  children: item.imagesUrls
-                      .map(
-                        (url) => Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 16),
+              controller: controller,
+              child: NotificationListener<ScrollMetricsNotification>(
+                onNotification: (scrollNotification) {
+                  hasScrollbar.value = (scrollNotification.metrics.maxScrollExtent > 0);
+                  return true;
+                },
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  controller: controller,
+                  child: Wrap(
+                    clipBehavior: Clip.none,
+                    spacing: 8,
+                    runSpacing: 8,
+                    runAlignment: WrapAlignment.start,
+                    children: List.generate(
+                      item.imagesUrls.length,
+                      (index) {
+                        Widget child = Image.network(
+                          item.imagesUrls[index],
+                          fit: BoxFit.fill,
+                        );
+                        if (item.deviceFrameIdentifier != null) {
+                          child = DeviceFrame(
+                            orientation: Orientation.values.byName(item.deviceFrameOrientation),
+                            isFrameVisible: item.deviceFrameIdentifier != null,
+                            device: Devices.all.firstWhere((e) => e.identifier.toString() == item.deviceFrameIdentifier),
+                            screen: child,
+                          );
+                        }
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            top: 8,
+                            bottom: hasScrollbar.value ? 16 : 0,
+                          ),
                           child: GestureDetector(
                             onTap: () {
+                              page.value = index;
                               showDialog(
                                 context: context,
-                                builder: (c) {
-                                  return BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => Navigator.pop(context),
+                                    child: LayoutBuilder(
+                                      builder: (context, snapshot) {
+                                        return BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                                          child: AlertDialog(
+                                            elevation: 0,
+                                            contentPadding: EdgeInsets.zero,
+                                            insetPadding: const EdgeInsets.all(8),
+                                            backgroundColor: Colors.transparent,
+                                            shadowColor: Colors.transparent,
+                                            content: SizedBox(
+                                              width: snapshot.maxWidth,
+                                              height: snapshot.maxHeight,
+                                              child: Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  PageView(
+                                                    controller: PageController(initialPage: index),
+                                                    onPageChanged: (int page) => this.page.value = page,
+                                                    children: item.imagesUrls.map(
+                                                      (url) {
+                                                        Widget child = Image.network(
+                                                          url,
+                                                          fit: BoxFit.contain,
+                                                        );
+                                                        if (item.deviceFrameIdentifier != null) {
+                                                          child = DeviceFrame(
+                                                            orientation: Orientation.values.byName(item.deviceFrameOrientation),
+                                                            isFrameVisible: item.deviceFrameIdentifier != null,
+                                                            device: Devices.all.firstWhere((e) => e.identifier.toString() == item.deviceFrameIdentifier),
+                                                            screen: child,
+                                                          );
+                                                        }
+                                                        return Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: InteractiveViewer(
+                                                            maxScale: 4,
+                                                            minScale: 0.25,
+                                                            child: child,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).toList(),
+                                                  ),
+                                                  Obx(
+                                                    () => Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        if (page.value > 0)
+                                                          const Material(
+                                                            color: Colors.transparent,
+                                                            elevation: 4,
+                                                            child: Icon(
+                                                              Icons.chevron_left,
+                                                              color: Colors.yellow,
+                                                            ),
+                                                          ),
+                                                        const Spacer(),
+                                                        if (page.value < item.imagesUrls.length - 1)
+                                                          const Material(
+                                                            color: Colors.transparent,
+                                                            elevation: 4,
+                                                            child: Icon(
+                                                              Icons.chevron_right,
+                                                              color: Colors.yellow,
+                                                            ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
-                                      child: AlertDialog(
-                                        contentPadding: EdgeInsets.zero,
-                                        content: Image.network(
-                                          url.toString(),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
                                     ),
                                   );
                                 },
                               );
                             },
-                            child: ClipRRect(
-                              clipBehavior: Clip.antiAlias,
-                              borderRadius: BorderRadius.circular(8),
-                              child: ConstrainedBox(
-                                constraints: constraints,
-                                child: Image.network(
-                                  url,
-                                ),
-                              ),
+                            child: ConstrainedBox(
+                              constraints: constraints,
+                              child: child,
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),

@@ -49,15 +49,16 @@ class _MultiSelectState extends State<MultiSelect> {
       content: SizedBox(
         height: kMinInteractiveDimension * 5,
         child: Scrollbar(
-          thumbVisibility: true,
           child: SingleChildScrollView(
             child: ListBody(
               children: widget.items
                   .map(
                     (item) => CheckboxListTile(
+                      dense: true,
                       value: _selectedItems.contains(item),
                       contentPadding: const EdgeInsets.all(8),
                       title: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.network(
                             tagIcons[item]!,
@@ -79,7 +80,7 @@ class _MultiSelectState extends State<MultiSelect> {
       actions: [
         TextButton(
           onPressed: _cancel,
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         TextButton(
           onPressed: _clear,
