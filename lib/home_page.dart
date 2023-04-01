@@ -180,11 +180,9 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text("Criado com "),
-            const Tooltip(message: "Flutter", child: FlutterLogo(size: 20)),
-            const Text(" e "),
-            Tooltip(message: "Firebase", child: Image.network(tagIcons["Firebase"]!, height: 20)),
+          children: const [
+            Text("Criado com "),
+            Tooltip(message: "Flutter", child: FlutterLogo(size: 20)),
           ],
         ),
       ),
