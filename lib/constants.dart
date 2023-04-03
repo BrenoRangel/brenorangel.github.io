@@ -8,7 +8,7 @@ const tagIcons = {
   'Dart': 'https://img.icons8.com/color/256/dart.png',
   'HTML': 'https://cdn.worldvectorlogo.com/logos/html-1.svg',
   'CSS': 'https://cdn.worldvectorlogo.com/logos/css-3.svg',
-  'Javascript': 'https://cdn.worldvectorlogo.com/logos/javascript-1.svg',
+  //'Javascript': 'https://cdn.worldvectorlogo.com/logos/javascript-1.svg',
   'Celular': 'https://cdn-icons-png.flaticon.com/512/15/15874.png',
   'Tablet': 'https://cdn-icons-png.flaticon.com/512/0/319.png',
 };
