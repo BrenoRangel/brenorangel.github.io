@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'constants.dart';
+import 'utils.dart';
 
 class MultiSelect extends StatefulWidget {
   final Widget title;
@@ -20,28 +21,6 @@ class MultiSelect extends StatefulWidget {
 class _MultiSelectState extends State<MultiSelect> {
   final List<String> _selectedItems = [];
 
-  void _itemChange(String itemValue, bool isSelected) {
-    setState(() {
-      if (isSelected) {
-        _selectedItems.add(itemValue);
-      } else {
-        _selectedItems.remove(itemValue);
-      }
-    });
-  }
-
-  void _cancel() => Navigator.pop(context, widget.selectedItems);
-
-  void _clear() => Navigator.pop(context, null);
-
-  void _submit() => Navigator.pop(context, _selectedItems);
-
-  @override
-  void initState() {
-    _selectedItems.addAll(widget.selectedItems);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -60,11 +39,7 @@ class _MultiSelectState extends State<MultiSelect> {
                       title: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.network(
-                            tagIcons[item]!,
-                            width: 20,
-                            height: 20,
-                          ),
+                          MarkdownBody(data: buildTagLogo(item), imageBuilder: markdowImageBuilder),
                           Text(' $item'),
                         ],
                       ),
@@ -93,4 +68,26 @@ class _MultiSelectState extends State<MultiSelect> {
       ],
     );
   }
+
+  @override
+  void initState() {
+    _selectedItems.addAll(widget.selectedItems);
+    super.initState();
+  }
+
+  void _cancel() => Navigator.pop(context, widget.selectedItems);
+
+  void _clear() => Navigator.pop(context, null);
+
+  void _itemChange(String itemValue, bool isSelected) {
+    setState(() {
+      if (isSelected) {
+        _selectedItems.add(itemValue);
+      } else {
+        _selectedItems.remove(itemValue);
+      }
+    });
+  }
+
+  void _submit() => Navigator.pop(context, _selectedItems);
 }

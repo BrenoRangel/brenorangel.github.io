@@ -1,11 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //const color = Color(0xFF0077B7);
 const color = Colors.grey;
-
-final lightColorScheme = ColorScheme.fromSeed(seedColor: color, brightness: Brightness.light);
-final darkColorScheme = ColorScheme.fromSeed(seedColor: color, brightness: Brightness.dark);
 
 const scrollbarTheme = ScrollbarThemeData(
   thumbVisibility: MaterialStatePropertyAll(true),
@@ -13,6 +12,9 @@ const scrollbarTheme = ScrollbarThemeData(
   radius: Radius.zero,
   thumbColor: MaterialStatePropertyAll(color),
 );
+final darkColorScheme = ColorScheme.fromSeed(seedColor: color, brightness: Brightness.dark);
+
+final lightColorScheme = ColorScheme.fromSeed(seedColor: color, brightness: Brightness.light);
 
 ThemeData buildTheme(ThemeMode themeMode) {
   final colorScheme = themeMode == ThemeMode.light ? lightColorScheme : darkColorScheme;
@@ -30,3 +32,8 @@ ThemeData buildTheme(ThemeMode themeMode) {
     cardTheme: theme.cardTheme.copyWith(margin: EdgeInsets.zero),
   );
 }
+
+getConstraints(BuildContext context) => BoxConstraints(
+      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) / 2,
+      maxWidth: MediaQuery.of(context).size.width - 16,
+    );

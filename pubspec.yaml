@@ -19,6 +19,12 @@ dependencies:
   device_frame: ^1.1.0
   get: ^4.6.5
 
+  clone_banco_inter:
+    path: apps/clone_banco_inter
+
+  basement:
+    path: plugins/basement
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,3 +42,4 @@ flutter:
     - assets/images/
     - assets/images/espaco/
     - assets/images/quiz/
+    - apps/clone_banco_inter/assets/

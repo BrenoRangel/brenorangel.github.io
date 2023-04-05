@@ -1,15 +1,24 @@
-import 'dart:math';
 import 'dart:ui';
 
+import 'package:basement/basement.dart';
+import 'package:clone_banco_inter/main.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:portifolio/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'components/app_card.dart';
+import 'components/header.dart';
+import 'components/item_view.dart';
+import 'constants.dart';
 import 'data.dart';
-import 'item_view.dart';
+import 'item.dart';
 import 'main.dart';
 import 'multi_select.dart';
+import 'theming.dart';
+
+var allTags = List<String>.from(tagIcons.keys);
+ScrollController controller = ScrollController();
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,18 +27,19 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-var allTags = List<String>.from(tagIcons.keys);
-ScrollController controller = ScrollController();
-
 class _HomePageState extends State<HomePage> {
   List<String> _selectedTags = [];
   var _selectedItems = apps;
 
   @override
   Widget build(BuildContext context) {
-    var constraints = BoxConstraints(
-      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) / 2,
-      maxWidth: MediaQuery.of(context).size.width - 16,
+    final constraints = getConstraints(context);
+    final interApp = ConstrainedBox(
+      constraints: constraints,
+      child: DeviceFrame(
+        screen: const InterApp(),
+        device: Devices.ios.iPhone13,
+      ),
     );
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -80,9 +90,9 @@ class _HomePageState extends State<HomePage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (Theme.of(context).brightness == Brightness.dark) {
-                          MyApp.of(context).changeTheme(ThemeMode.light);
+                          PortifolioApp.of(context).changeTheme(ThemeMode.light);
                         } else {
-                          MyApp.of(context).changeTheme(ThemeMode.dark);
+                          PortifolioApp.of(context).changeTheme(ThemeMode.dark);
                         }
                       },
                       child: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
@@ -196,41 +206,81 @@ class _HomePageState extends State<HomePage> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               controller: controller,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
                 children: [
-                  ..._selectedItems
-                      .map(
-                        (item) => Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8,
-                                  right: 16,
-                                ),
-                                child: ItemView(item: item),
-                              ),
-                            ),
-                          ],
+                  buildRow(
+                    AppCard(
+                      children: [
+                        Header(
+                          Item(
+                            title: "Clone Banco Inter",
+                            tags: [
+                              'Celular',
+                              'Flutter',
+                              'Dart'
+                            ],
+                          ),
                         ),
-                      )
-                      .expand(
-                        (e) => [
-                          e,
-                          const SizedBox(
-                            height: 8,
-                          )
-                        ],
-                      )
-                      .toList()
-                    ..removeLast(),
+                        gap,
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          child: IgnorePointer(child: interApp),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: LayoutBuilder(
+                                    builder: (context, snapshot) {
+                                      return BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                                        child: AlertDialog(
+                                          elevation: 0,
+                                          contentPadding: EdgeInsets.zero,
+                                          insetPadding: const EdgeInsets.all(8),
+                                          backgroundColor: Colors.transparent,
+                                          shadowColor: Colors.transparent,
+                                          content: SizedBox(width: snapshot.maxWidth, height: snapshot.maxHeight, child: interApp),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  ..._selectedItems.map(
+                    (item) => buildRow(ItemView(item: item)),
+                  )
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row buildRow(Widget child) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 8,
+              right: 16,
+            ),
+            child: child,
+          ),
+        ),
+      ],
     );
   }
 }
