@@ -8,25 +8,25 @@ import 'theming.dart';
 
 void main() {
   usePathUrlStrategy();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-
-  static _MyAppState of(BuildContext context) => context.findAncestorStateOfType<_MyAppState>()!;
+  runApp(const PortfolioApp());
 }
 
 ThemeMode _themeMode = ThemeMode.light;
 
-class _MyAppState extends State<MyApp> {
+class PortfolioApp extends StatefulWidget {
+  const PortfolioApp({super.key});
+
+  @override
+  State<PortfolioApp> createState() => _PortfolioAppState();
+
+  static _PortfolioAppState of(BuildContext context) => context.findAncestorStateOfType<_PortfolioAppState>()!;
+}
+
+class _PortfolioAppState extends State<PortfolioApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Portifólio | Breno Rangel',
+      title: 'Portfolio | Breno Rangel',
       theme: buildTheme(_themeMode),
       themeMode: _themeMode,
       scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: PointerDeviceKind.values.toSet()),

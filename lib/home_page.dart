@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:portifolio/constants.dart';
+import 'package:portfolio/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'data.dart';
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Portifólio | Breno Rangel'),
+        title: const Text('Portfolio | Breno Rangel'),
         centerTitle: true,
         toolbarHeight: kTextTabBarHeight,
         bottom: PreferredSize(
@@ -80,9 +80,9 @@ class _HomePageState extends State<HomePage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (Theme.of(context).brightness == Brightness.dark) {
-                          MyApp.of(context).changeTheme(ThemeMode.light);
+                          PortfolioApp.of(context).changeTheme(ThemeMode.light);
                         } else {
-                          MyApp.of(context).changeTheme(ThemeMode.dark);
+                          PortfolioApp.of(context).changeTheme(ThemeMode.dark);
                         }
                       },
                       child: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
