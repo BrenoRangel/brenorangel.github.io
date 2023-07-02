@@ -1,6 +1,23 @@
-import 'item.dart';
+import 'package:clone_banco_inter/main.dart';
 
-var apps = [
+import 'item.dart';
+import 'main.dart';
+
+var apps = const [
+  AppItem(
+    title: "Portifolio",
+    published: false,
+    deviceFrameIdentifier: "Medium",
+    deviceFrameOrientation: "portrait",
+    child: PortfolioApp(),
+  ),
+  AppItem(
+    title: "Clone Banco Inter",
+    published: false,
+    deviceFrameIdentifier: "Medium",
+    deviceFrameOrientation: "portrait",
+    child: BancoInterApp(),
+  ),
   Item(
     title: 'Ibmec/RioOpen Quiz 2023',
     published: false,

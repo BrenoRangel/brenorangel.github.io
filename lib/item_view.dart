@@ -11,7 +11,7 @@ import 'constants.dart';
 import 'item.dart';
 
 class ItemView extends StatefulWidget {
-  final Item item;
+  final IItem item;
 
   const ItemView({super.key, required this.item});
 
@@ -72,123 +72,20 @@ class _ItemViewState extends State<ItemView> {
                   clipBehavior: Clip.none,
                   spacing: 8,
                   runSpacing: 8,
-                  runAlignment: WrapAlignment.start,
-                  children: List.generate(
-                    widget.item.imagesUrls.length,
-                    (index) {
-                      Widget image = Image.network(
-                        widget.item.imagesUrls[index],
-                        fit: BoxFit.fill,
-                      );
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                          bottom: hasScrollbar ? 16 : 0,
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            page.value = index;
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return GestureDetector(
-                                  onTap: () => Navigator.pop(context),
-                                  child: LayoutBuilder(
-                                    builder: (context, snapshot) {
-                                      return BackdropFilter(
-                                        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                                        child: AlertDialog(
-                                          elevation: 0,
-                                          contentPadding: EdgeInsets.zero,
-                                          insetPadding: const EdgeInsets.all(8),
-                                          backgroundColor: Colors.transparent,
-                                          shadowColor: Colors.transparent,
-                                          content: SizedBox(
-                                            width: snapshot.maxWidth,
-                                            height: snapshot.maxHeight,
-                                            child: Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                PageView(
-                                                  controller: PageController(initialPage: index),
-                                                  onPageChanged: (int page) => this.page.value = page,
-                                                  children: widget.item.imagesUrls.map(
-                                                    (url) {
-                                                      Widget child = Image.network(
-                                                        url,
-                                                        fit: BoxFit.contain,
-                                                      );
-                                                      if (widget.item.deviceFrameIdentifier != null) {
-                                                        child = DeviceFrame(
-                                                          orientation: Orientation.values.byName(widget.item.deviceFrameOrientation),
-                                                          isFrameVisible: widget.item.deviceFrameIdentifier != null,
-                                                          device: Devices.all.firstWhere((e) => e.name == widget.item.deviceFrameIdentifier),
-                                                          screen: child,
-                                                        );
-                                                      }
-                                                      return Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: InteractiveViewer(
-                                                          maxScale: 4,
-                                                          minScale: 0.25,
-                                                          child: child,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ).toList(),
-                                                ),
-                                                Obx(
-                                                  () => Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      if (page.value > 0)
-                                                        const Material(
-                                                          color: Colors.transparent,
-                                                          elevation: 4,
-                                                          child: Icon(
-                                                            Icons.chevron_left,
-                                                            color: Colors.yellow,
-                                                          ),
-                                                        ),
-                                                      const Spacer(),
-                                                      if (page.value < widget.item.imagesUrls.length - 1)
-                                                        const Material(
-                                                          color: Colors.transparent,
-                                                          elevation: 4,
-                                                          child: Icon(
-                                                            Icons.chevron_right,
-                                                            color: Colors.yellow,
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: ConstrainedBox(
-                            constraints: constraints,
-                            child: widget.item.deviceFrameIdentifier != null
-                                ? DeviceFrame(
-                                    orientation: Orientation.values.byName(widget.item.deviceFrameOrientation),
-                                    isFrameVisible: widget.item.deviceFrameIdentifier != null,
-                                    device: Devices.all.firstWhere((e) => e.name == widget.item.deviceFrameIdentifier),
-                                    screen: image,
-                                  )
-                                : image,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  runAlignment: WrapAlignment.center,
+                  alignment: WrapAlignment.center,
+                  children: switch (widget.item) {
+                    (AppItem app) => [
+                        buildMock(
+                          constraints: constraints,
+                          child: app.child,
+                        )
+                      ],
+                    (Item d) => buildChildren(context, constraints),
+                    _ => [
+                        const Placeholder()
+                      ]
+                  },
                 ),
               ),
             ),
@@ -198,9 +95,146 @@ class _ItemViewState extends State<ItemView> {
     );
   }
 
+  List<Widget> buildChildren(BuildContext context, BoxConstraints constraints) {
+    return List.generate(
+      widget.item.imagesUrls!.length,
+      (index) {
+        Widget image = Image.network(
+          widget.item.imagesUrls![index],
+          fit: BoxFit.fill,
+        );
+        return Padding(
+          padding: EdgeInsets.only(
+            top: 8,
+            bottom: hasScrollbar ? 16 : 0,
+          ),
+          child: buildMock(
+            constraints: constraints,
+            child: image,
+            index: index,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildMock({
+    required BoxConstraints constraints,
+    required Widget child,
+    int index = 0,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        page.value = index;
+        showDialog(
+          context: context,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: LayoutBuilder(
+                builder: (context, snapshot) {
+                  return BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                    child: AlertDialog(
+                      elevation: 0,
+                      contentPadding: EdgeInsets.zero,
+                      insetPadding: const EdgeInsets.all(8),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      content: SizedBox(
+                          width: snapshot.maxWidth,
+                          height: snapshot.maxHeight,
+                          child: switch (widget.item) {
+                            (AppItem item) => buildDeviceFrame(child),
+                            _ => Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  PageView(
+                                    controller: PageController(initialPage: index),
+                                    onPageChanged: (int page) => this.page.value = page,
+                                    children: widget.item.imagesUrls!.map(
+                                      (url) {
+                                        Widget child = Image.network(
+                                          url,
+                                          fit: BoxFit.contain,
+                                        );
+                                        if (widget.item.deviceFrameIdentifier != null) {
+                                          child = buildDeviceFrame(child);
+                                        }
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InteractiveViewer(
+                                            maxScale: 4,
+                                            minScale: 0.25,
+                                            child: child,
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                  Obx(
+                                    () => Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        if (page.value > 0)
+                                          const Material(
+                                            color: Colors.transparent,
+                                            elevation: 4,
+                                            child: Icon(
+                                              Icons.chevron_left,
+                                              color: Colors.yellow,
+                                            ),
+                                          ),
+                                        const Spacer(),
+                                        if (page.value < widget.item.imagesUrls!.length - 1)
+                                          const Material(
+                                            color: Colors.transparent,
+                                            elevation: 4,
+                                            child: Icon(
+                                              Icons.chevron_right,
+                                              color: Colors.yellow,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          }),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
+      child: ConstrainedBox(
+        constraints: constraints,
+        child: widget.item.deviceFrameIdentifier != null
+            ? DeviceFrame(
+                orientation: Orientation.values.byName(widget.item.deviceFrameOrientation),
+                isFrameVisible: widget.item.deviceFrameIdentifier != null,
+                device: Devices.all.firstWhere((e) => e.name == widget.item.deviceFrameIdentifier),
+                screen: child,
+              )
+            : child,
+      ),
+    );
+  }
+
+  DeviceFrame buildDeviceFrame(Widget child) {
+    return DeviceFrame(
+      orientation: Orientation.values.byName(widget.item.deviceFrameOrientation),
+      isFrameVisible: widget.item.deviceFrameIdentifier != null,
+      device: Devices.all.firstWhere((e) => e.name == widget.item.deviceFrameIdentifier),
+      screen: child,
+    );
+  }
+
   String buildTagLogo(String tag) => '![$tag](${tagIcons[tag]})';
 
-  String buildContent(Item item) {
+  String buildContent(IItem item) {
     final buffer = StringBuffer();
     buffer.writeln('# ${item.title}\n');
     if (!item.published) buffer.writeln('Não publicado. ');

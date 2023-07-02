@@ -1,0 +1,17 @@
+{
+    "name": "brenorangel.github.io",
+    "image": "ghcr.io/cirruslabs/flutter:3.10.5",
+    "runArgs": [
+        "--net=host"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Dart-Code.dart-code",
+                "Dart-Code.flutter"
+            ]
+        }
+    },
+    "postCreateCommand": "bash -i .devcontainer/postCreateCommand.sh",
+    "postStartCommand": "bash -i .devcontainer/postStartCommand.sh"
+}

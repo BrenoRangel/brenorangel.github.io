@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const tagIcons = {
-  'Unity': 'https://answers.unity.com/storage/temp/109082-unity.png',
+  'Unity': 'https://cdn-icons-png.flaticon.com/512/5969/5969294.png',
   'C#': 'https://cdn.jsdelivr.net/npm/@programming-languages-logos/csharp@0.0.0/csharp_256x256.png',
   'Flutter': 'https://cdn.iconscout.com/icon/free/png-256/flutter-3521432-2944876.png',
   'Firebase': 'https://cdn.iconscout.com/icon/free/png-256/firebase-1-282796.png',
