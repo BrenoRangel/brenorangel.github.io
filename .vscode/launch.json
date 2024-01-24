@@ -10,8 +10,12 @@
             "type": "dart",
             "args": [
                 //"-v",
-                "--web-hostname=0.0.0.0",
-                "--web-port=8080"
+                "-d",
+                "web-server",
+                //"--web-hostname=0.0.0.0",
+                "--web-port=8080",
+                "--web-renderer",
+                "html"
             ]
         },
         {
@@ -30,6 +34,11 @@
             "flutterMode": "release",
             "args": [
                 //"-v"
+                "-d",
+                "web-server",
+                //"--web-hostname=0.0.0.0",
+                "--web-port=8080",
+                "--web-renderer=html",
             ]
         }
     ]

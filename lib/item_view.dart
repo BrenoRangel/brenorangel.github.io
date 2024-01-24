@@ -5,6 +5,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart' as md;
 import 'package:get/get.dart';
+import 'package:portfolio/theming.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'constants.dart';
@@ -25,16 +26,21 @@ class _ItemViewState extends State<ItemView> {
   bool hasScrollbar = false;
 
   @override
-  Widget build(BuildContext context) {
-    var constraints = BoxConstraints(
-      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) / 2,
-      maxWidth: MediaQuery.of(context).size.width - 16,
-    );
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       setState(() {
         hasScrollbar = (controller.hasClients && controller.position.maxScrollExtent > 0);
       });
     });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final constraints = BoxConstraints(
+      maxHeight: min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 0.375,
+      maxWidth: MediaQuery.of(context).size.width - 16,
+    );
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
@@ -50,14 +56,19 @@ class _ItemViewState extends State<ItemView> {
             md.MarkdownBody(
               data: buildContent(widget.item),
               imageBuilder: (uri, title, alt) {
-                return Tooltip(
-                  message: alt,
-                  child: Image.network(
-                    uri.toString(),
-                    width: 20,
-                    height: 20,
-                  ),
-                );
+                final image = switch (uri) {
+                  final networkUri when uri.scheme.startsWith('http') => Image.network(
+                      networkUri.toString(),
+                      width: 20,
+                      height: 20,
+                    ),
+                  _ => Image(
+                      image: AssetImage(uri.toString()),
+                      width: 20,
+                      height: 20,
+                    )
+                };
+                return Tooltip(message: alt, child: image);
               },
               onTapLink: (text, href, title) => launchUrl(
                 Uri.parse('$href'),
@@ -70,8 +81,8 @@ class _ItemViewState extends State<ItemView> {
                 controller: controller,
                 child: Wrap(
                   clipBehavior: Clip.none,
-                  spacing: 8,
-                  runSpacing: 8,
+                  spacing: spacing,
+                  runSpacing: spacing,
                   runAlignment: WrapAlignment.center,
                   alignment: WrapAlignment.center,
                   children: switch (widget.item) {
@@ -81,7 +92,7 @@ class _ItemViewState extends State<ItemView> {
                           child: app.child,
                         )
                       ],
-                    (Item d) => buildChildren(context, constraints),
+                    (Item _) => buildChildren(context, constraints),
                     _ => [
                         const Placeholder()
                       ]
@@ -142,65 +153,66 @@ class _ItemViewState extends State<ItemView> {
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
                       content: SizedBox(
-                          width: snapshot.maxWidth,
-                          height: snapshot.maxHeight,
-                          child: switch (widget.item) {
-                            (AppItem item) => buildDeviceFrame(child),
-                            _ => Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  PageView(
-                                    controller: PageController(initialPage: index),
-                                    onPageChanged: (int page) => this.page.value = page,
-                                    children: widget.item.imagesUrls!.map(
-                                      (url) {
-                                        Widget child = Image.network(
-                                          url,
-                                          fit: BoxFit.contain,
-                                        );
-                                        if (widget.item.deviceFrameIdentifier != null) {
-                                          child = buildDeviceFrame(child);
-                                        }
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: InteractiveViewer(
-                                            maxScale: 4,
-                                            minScale: 0.25,
-                                            child: child,
+                        width: snapshot.maxWidth,
+                        height: snapshot.maxHeight,
+                        child: switch (widget.item) {
+                          (AppItem _) => buildDeviceFrame(child),
+                          _ => Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                PageView(
+                                  controller: PageController(initialPage: index),
+                                  onPageChanged: (int page) => this.page.value = page,
+                                  children: widget.item.imagesUrls!.map(
+                                    (url) {
+                                      Widget child = Image.network(
+                                        url,
+                                        fit: BoxFit.contain,
+                                      );
+                                      if (widget.item.deviceFrameIdentifier != null) {
+                                        child = buildDeviceFrame(child);
+                                      }
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: InteractiveViewer(
+                                          maxScale: 4,
+                                          minScale: 0.25,
+                                          child: child,
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
+                                Obx(
+                                  () => Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      if (page.value > 0)
+                                        const Material(
+                                          color: Colors.transparent,
+                                          elevation: 4,
+                                          child: Icon(
+                                            Icons.chevron_left,
+                                            color: Colors.yellow,
                                           ),
-                                        );
-                                      },
-                                    ).toList(),
+                                        ),
+                                      const Spacer(),
+                                      if (page.value < widget.item.imagesUrls!.length - 1)
+                                        const Material(
+                                          color: Colors.transparent,
+                                          elevation: 4,
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.yellow,
+                                          ),
+                                        ),
+                                    ],
                                   ),
-                                  Obx(
-                                    () => Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        if (page.value > 0)
-                                          const Material(
-                                            color: Colors.transparent,
-                                            elevation: 4,
-                                            child: Icon(
-                                              Icons.chevron_left,
-                                              color: Colors.yellow,
-                                            ),
-                                          ),
-                                        const Spacer(),
-                                        if (page.value < widget.item.imagesUrls!.length - 1)
-                                          const Material(
-                                            color: Colors.transparent,
-                                            elevation: 4,
-                                            child: Icon(
-                                              Icons.chevron_right,
-                                              color: Colors.yellow,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          }),
+                                ),
+                              ],
+                            ),
+                        },
+                      ),
                     ),
                   );
                 },
@@ -245,28 +257,22 @@ class _ItemViewState extends State<ItemView> {
           item.android,
           item.iOS
         ]..removeWhere(
-            (element) => [
-              null
-            ].contains(element),
+            (element) => element == null,
           )
-      ].map((m) => '[${newMethod(m)}]($m)').join(', '),
+      ].map((m) => '[${buildLink(m)}]($m)').join(', '),
     );
     buffer.writeln('\n');
     buffer.writeln(item.tags.map(buildTagLogo).join(' '));
     return buffer.toString();
   }
 
-  String newMethod(String? m) {
-    var host = Uri.parse('$m').host;
-    switch (host) {
-      case 'play.google.com':
-        host = 'Play Store';
-        break;
-      case 'apps.apple.com':
-        host = 'App Store';
-        break;
-    }
-    host = '$host ↗';
-    return host;
+  String buildLink(String? m) {
+    m = Uri.parse('$m').host;
+
+    return switch (m) {
+      'play.google.com' => 'Play Store ➚',
+      'apps.apple.com' => 'App Store ➚',
+      _ => m
+    };
   }
 }

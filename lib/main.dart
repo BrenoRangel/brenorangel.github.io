@@ -11,18 +11,18 @@ void main() {
   runApp(const PortfolioApp());
 }
 
-ThemeMode _themeMode = ThemeMode.light;
-
 class PortfolioApp extends StatefulWidget {
   const PortfolioApp({super.key});
 
   @override
-  State<PortfolioApp> createState() => _PortfolioAppState();
+  State<PortfolioApp> createState() => PortfolioAppState();
 
-  static _PortfolioAppState of(BuildContext context) => context.findAncestorStateOfType<_PortfolioAppState>()!;
+  static PortfolioAppState of(BuildContext context) => context.findAncestorStateOfType<PortfolioAppState>()!;
 }
 
-class _PortfolioAppState extends State<PortfolioApp> {
+class PortfolioAppState extends State<PortfolioApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

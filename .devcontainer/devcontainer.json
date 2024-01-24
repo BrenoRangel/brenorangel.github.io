@@ -1,6 +1,6 @@
 {
     "name": "brenorangel.github.io",
-    "image": "ghcr.io/cirruslabs/flutter:3.10.5",
+    "image": "ghcr.io/cirruslabs/flutter:3.16.8",
     "runArgs": [
         "--net=host"
     ],

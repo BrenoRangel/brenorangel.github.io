@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 class Section {
-  String title;
-  IconData iconData;
+  final String title;
+  final IconData iconData;
 
-  Section(this.title, this.iconData);
+  const Section(this.title, this.iconData);
 }

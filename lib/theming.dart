@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:named_html_color/html_color.dart';
 
@@ -15,6 +16,10 @@ const scrollbarTheme = ScrollbarThemeData(
   radius: Radius.zero,
   thumbColor: MaterialStatePropertyAll(color),
 );
+
+const spacing = 8.0;
+const padding = EdgeInsets.all(spacing);
+const gap = Gap(spacing);
 
 ThemeData buildTheme(ThemeMode themeMode) {
   final colorScheme = themeMode == ThemeMode.light ? lightColorScheme : darkColorScheme;
@@ -34,9 +39,9 @@ ThemeData buildTheme(ThemeMode themeMode) {
 }
 
 final roundButtonStyle = ElevatedButton.styleFrom(
-  shape: const CircleBorder(),
+  shape: const CircleBorder(eccentricity: 0),
   padding: EdgeInsets.zero,
   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-  minimumSize: const Size.square(40),
-  maximumSize: const Size.square(40),
+  minimumSize: const Size.square(32),
+  maximumSize: const Size.square(32),
 );

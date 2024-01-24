@@ -6,37 +6,58 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.0.6 <4.0.0"
+  flutter: ^3.10.6
 
 dependencies:
-  flutter:
-    sdk: flutter
-  google_fonts: ^4.0.3
-  url_launcher: ^6.1.10
-  flutter_markdown: ^0.6.14
-  cupertino_icons: ^1.0.2
-  flutter_scroll_shadow: ^1.1.0
-  device_frame: ^1.1.0
-  get: ^4.6.5
-  named_html_color: ^0.0.3+1
-
   clone_banco_inter:
     path: ./apps/clone_banco_inter
+  device_frame: ^1.1.0
+  flutter:
+    sdk: flutter
+  flutter_markdown: ^0.6.15+1
+  flutter_scroll_shadow: ^1.2.0
+  get: ^4.6.5
+  google_fonts: ^5.1.0
+  named_html_color: ^0.0.3+1
+  url_launcher: ^6.1.11
+  webview_flutter_web: ^0.2.2+1
+  cached_network_image: ^3.2.3
+  gap: ^3.0.1
+  http: ^1.1.0
 
 dev_dependencies:
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
   fonts:
     - family: Azonix
       fonts:
-        - asset: assets/fonts/Azonix.otf
+        - asset: fonts/Azonix.otf
   assets:
     - assets/icons/
     - assets/images/
+    - assets/images/badges/
     - assets/images/espaco/
     - assets/images/quiz/
+    - assets/images/sintaosom/
+    - assets/images/pk1/
+    - assets/images/pk2/
+    - assets/images/pk3/
+    - assets/images/pk4/
+    - assets/images/pk5/
+    - assets/images/pk6/    
+    - assets/images/kae1/
+    - assets/images/kae2/
+    - assets/images/kae3/
+    - assets/images/kae4/
+    - assets/images/pck1/
+    - assets/images/pck2/    
+    - assets/images/pcbk1/
+    - assets/images/pcbk2/
+    - assets/images/pcpt1/
+    - assets/images/pcpt2/
+    #- assets/images/clone_banco_inter/

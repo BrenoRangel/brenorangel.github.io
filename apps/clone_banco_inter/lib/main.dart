@@ -13,13 +13,18 @@ const primaryColor = Color(0xffff7a00);
 const spacing = 8.0;
 const padding = EdgeInsets.all(spacing);
 
-var brFlag = Image.asset(
-  'assets/br.png',
+const brFlag = Image(
+  image: AssetImage(
+    'assets/images/clone_banco_inter/br.png',
+  ),
   filterQuality: FilterQuality.high,
   isAntiAlias: true,
 );
-var usFlag = Image.asset(
-  'assets/us.png',
+
+const usFlag = Image(
+  image: AssetImage(
+    'assets/images/clone_banco_inter/us.png',
+  ),
   filterQuality: FilterQuality.high,
   isAntiAlias: true,
 );
@@ -59,31 +64,31 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+const sections = [
+  Section('Cartões', Icons.credit_card),
+  Section('Pix', Icons.pix),
+  Section('Investir', Icons.trending_up),
+  Section('Meu Porquinho', Icons.savings),
+  Section('Pagamentos', CupertinoIcons.barcode),
+  Section('Transferências', Icons.currency_exchange),
+  Section('Depósito por boleto', Icons.receipt_long_outlined),
+  Section('Antecipação do FGTS', Icons.savings),
+  Section('Indique e Ganhe', Icons.card_giftcard),
+  Section('Depósito por cheque', Icons.local_atm),
+  Section('Recarga', Icons.phone_android),
+  Section('Financiamento Imobiliário', Icons.real_estate_agent),
+];
+
+const otherSections = [
+  Section('Gift Cards', Icons.card_giftcard),
+  Section('Recarga', Icons.phone_android),
+  Section('Delivery', Icons.delivery_dining),
+  Section('Todos', Icons.more_horiz),
+];
+
 class _MyHomePageState extends State<MyHomePage> {
   bool take3 = true;
   bool showBrazil = true;
-
-  var sections = [
-    Section('Cartões', Icons.credit_card),
-    Section('Pix', Icons.pix),
-    Section('Investir', Icons.trending_up),
-    Section('Meu Porquinho', Icons.savings),
-    Section('Pagamentos', CupertinoIcons.barcode),
-    Section('Transferências', Icons.currency_exchange),
-    Section('Depósito por boleto', Icons.receipt_long_outlined),
-    Section('Antecipação do FGTS', Icons.savings),
-    Section('Indique e Ganhe', Icons.card_giftcard),
-    Section('Depósito por cheque', Icons.local_atm),
-    Section('Recarga', Icons.phone_android),
-    Section('Financiamento Imobiliário', Icons.real_estate_agent),
-  ];
-
-  var sections2 = [
-    Section('Gift Cards', Icons.card_giftcard),
-    Section('Recarga', Icons.phone_android),
-    Section('Delivery', Icons.delivery_dining),
-    Section('Todos', Icons.more_horiz),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               flex: 0,
               child: GridView.builder(
-                itemCount: sections2.length,
+                itemCount: otherSections.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 1,
                   mainAxisSpacing: spacing,
@@ -196,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 4,
                 ),
                 shrinkWrap: true,
-                itemBuilder: (c, i) => SectionView2(sections2[i]),
+                itemBuilder: (c, i) => SectionView2(otherSections[i]),
               ),
             )
           ],
